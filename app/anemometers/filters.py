@@ -1,0 +1,14 @@
+from django_filters.rest_framework import FilterSet, filters
+
+from .models import Anemometer, Tag
+
+
+class AnemometerFilterSet(FilterSet):
+    name = filters.CharFilter(lookup_expr="icontains")
+    tag = filters.ModelMultipleChoiceFilter(
+        queryset=Tag.objects.all(), to_field_name="name", field_name="tags__name"
+    )
+
+    class Meta:
+        model = Anemometer
+        fields = ["name", "tags"]

@@ -16,5 +16,64 @@
     "groups": [],
     "user_permissions": []
   }
-}
+},
+{
+    "model": "anemometers.tag",
+    "pk": 1,
+    "fields": {
+      "name": "USA"
+    }
+  },
+  {
+    "model": "anemometers.tag",
+    "pk": 2,
+    "fields": {
+      "name": "France"
+    }
+  },
+  {
+    "model": "anemometers.anemometer",
+    "pk": 1,
+    "fields": {
+      "name": "New York - Empire State Building",
+      "coordinates": "POINT(-73.985428 40.748817)",
+      "tags": [1]
+    }
+  },
+  {
+    "model": "anemometers.anemometer",
+    "pk": 2,
+    "fields": {
+      "name": "New York - Central Park",
+      "coordinates": "POINT(-73.965355 40.782865)",
+      "tags": [1]
+    }
+  },
+  {
+    "model": "anemometers.anemometer",
+    "pk": 3,
+    "fields": {
+      "name": "New York - Statue of Liberty",
+      "coordinates": "POINT(-74.044500 40.689247)",
+      "tags": [1]
+    }
+  },
+  {
+    "model": "anemometers.anemometer",
+    "pk": 4,
+    "fields": {
+      "name": "San Francisco - Golden Gate Bridge",
+      "coordinates": "POINT(-122.419418 37.774929)",
+      "tags": [1]
+    }
+  },
+  {
+    "model": "anemometers.anemometer",
+    "pk": 5,
+    "fields": {
+      "name": "Paris - Eiffel Tower",
+      "coordinates": "POINT(2.294481 48.858844)",
+      "tags": [2]
+    }
+  }
 ]
