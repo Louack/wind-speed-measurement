@@ -3,6 +3,7 @@ from django.contrib.gis.measure import D
 from django.db.models import Avg, Max, Min, QuerySet
 from django.db.models.functions import Round
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
@@ -40,6 +41,7 @@ class AnemometerViewSet(
             return AnemometerRetrieveSerializer
         return AnemometerSerializer
 
+    @swagger_auto_schema(responses={200: WindReadingSerializer})
     @action(detail=True, methods=["get"], url_path="readings")
     def get_readings(self, request, pk=None):
         anemometer = self.get_object()
@@ -70,6 +72,10 @@ class WindReadingViewSet(
 
 
 class SpeedStatsWithinRadiusView(APIView):
+    @swagger_auto_schema(
+        query_serializer=SpeedStatsWithinRadiusQuerySerializer,
+        responses={200: SpeedStatsWithinRadiusResponseSerializer},
+    )
     def get(self, request, *args, **kwargs):
         query_serializer = SpeedStatsWithinRadiusQuerySerializer(
             data=request.query_params
