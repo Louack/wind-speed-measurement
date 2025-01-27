@@ -75,5 +75,140 @@
       "coordinates": "POINT(2.294481 48.858844)",
       "tags": [2]
     }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 1,
+    "fields": {
+      "anemometer": 1,
+      "speed": 45.6,
+      "date": "2025-01-26T10:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 2,
+    "fields": {
+      "anemometer": 1,
+      "speed": 72.4,
+      "date": "2025-01-26T15:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 3,
+    "fields": {
+      "anemometer": 1,
+      "speed": 55.3,
+      "date": "2025-01-25T18:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 4,
+    "fields": {
+      "anemometer": 2,
+      "speed": 62.7,
+      "date": "2025-01-25T12:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 5,
+    "fields": {
+      "anemometer": 2,
+      "speed": 47.8,
+      "date": "2025-01-25T16:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 6,
+    "fields": {
+      "anemometer": 2,
+      "speed": 78.9,
+      "date": "2025-01-25T20:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 7,
+    "fields": {
+      "anemometer": 3,
+      "speed": 40.3,
+      "date": "2025-01-24T11:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 8,
+    "fields": {
+      "anemometer": 3,
+      "speed": 68.7,
+      "date": "2025-01-24T14:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 9,
+    "fields": {
+      "anemometer": 3,
+      "speed": 52.4,
+      "date": "2025-01-24T19:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 10,
+    "fields": {
+      "anemometer": 4,
+      "speed": 58.9,
+      "date": "2025-01-23T09:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 11,
+    "fields": {
+      "anemometer": 4,
+      "speed": 73.1,
+      "date": "2025-01-23T13:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 12,
+    "fields": {
+      "anemometer": 4,
+      "speed": 49.6,
+      "date": "2025-01-23T17:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 13,
+    "fields": {
+      "anemometer": 5,
+      "speed": 65.4,
+      "date": "2025-01-22T08:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 14,
+    "fields": {
+      "anemometer": 5,
+      "speed": 41.8,
+      "date": "2025-01-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 15,
+    "fields": {
+      "anemometer": 5,
+      "speed": 76.2,
+      "date": "2025-01-22T18:00:00Z"
+    }
   }
 ]

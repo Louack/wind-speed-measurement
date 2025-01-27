@@ -12,3 +12,11 @@ class AnemometerFilterSet(FilterSet):
     class Meta:
         model = Anemometer
         fields = ["name", "tags"]
+
+
+class WindReadingFilterSet(FilterSet):
+    tag = filters.ModelMultipleChoiceFilter(
+        queryset=Tag.objects.all(),
+        to_field_name="name",
+        field_name="anemometer__tags__name",
+    )

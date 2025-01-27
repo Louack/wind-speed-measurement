@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.urls import reverse
+from freezegun import freeze_time
 from rest_framework import status
-from rest_framework.status import HTTP_200_OK
 from rest_framework.test import APITestCase
 
 from ..models import Anemometer
@@ -26,16 +26,23 @@ class AnemometerAPITestCase(APITestCase):
         assert response.status_code == status.HTTP_200_OK
         assert len(response.json()["results"]["features"]) == 5
 
+    @freeze_time("2025-01-27 0:00:00")
     def test_retrieve_anemometer(self):
         obj = Anemometer.objects.get(id=1)
         url = reverse("anemometers-detail", kwargs={"pk": obj.pk})
         response = self.client.get(url)
         assert response.status_code == status.HTTP_200_OK
+        print(response.json())
         assert response.json() == {
             "id": 1,
             "type": "Feature",
             "geometry": {"type": "Point", "coordinates": [-73.985428, 40.748817]},
-            "properties": {"name": "New York - Empire State Building", "tags": ["USA"]},
+            "properties": {
+                "name": "New York - Empire State Building",
+                "tags": ["USA"],
+                "daily_mean_speed": 59.0,
+                "weekly_mean_speed": 57.77,
+            },
         }
 
     def test_delete_anemometer(self):
@@ -68,7 +75,7 @@ class AnemometerAPITestCase(APITestCase):
         url = reverse("anemometers-detail", kwargs={"pk": obj.pk})
         data = {"name": "updated"}
         response = self.client.patch(path=url, data=data, format="json")
-        assert response.status_code == HTTP_200_OK
+        assert response.status_code == status.HTTP_200_OK
         assert response.json()["properties"]["name"] == "updated"
         assert response.json()["properties"]["name"] != name
 
@@ -78,5 +85,5 @@ class AnemometerAPITestCase(APITestCase):
         """
         url = reverse("anemometers-list")
         response = self.client.get(path=url, data={"tag": "USA"})
-        assert response.status_code == HTTP_200_OK
-        assert len(response.json()["results"]["features"]) == 4
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json()["count"] == 4
