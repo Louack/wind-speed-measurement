@@ -32,7 +32,6 @@ class AnemometerAPITestCase(APITestCase):
         url = reverse("anemometers-detail", kwargs={"pk": obj.pk})
         response = self.client.get(url)
         assert response.status_code == status.HTTP_200_OK
-        print(response.json())
         assert response.json() == {
             "id": 1,
             "type": "Feature",
@@ -87,3 +86,29 @@ class AnemometerAPITestCase(APITestCase):
         response = self.client.get(path=url, data={"tag": "USA"})
         assert response.status_code == status.HTTP_200_OK
         assert response.json()["count"] == 4
+
+    def test_daily_mean_speeds(self):
+        obj = Anemometer.objects.get(id=5)
+        url = reverse("anemometers-get-daily-mean-speeds", kwargs={"pk": obj.pk})
+
+        response = self.client.get(path=url)
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json()["results"] == [
+            {"day": "2025-01-22T00:00:00Z", "mean_speed": 53.6},
+            {"day": "2025-01-18T00:00:00Z", "mean_speed": 15.0},
+            {"day": "2025-01-15T00:00:00Z", "mean_speed": 20.0},
+            {"day": "2025-01-04T00:00:00Z", "mean_speed": 30.0},
+            {"day": "2025-01-03T00:00:00Z", "mean_speed": 30.0},
+        ]
+
+    def test_weekly_mean_speeds(self):
+        obj = Anemometer.objects.get(id=5)
+        url = reverse("anemometers-get-weekly-mean-speeds", kwargs={"pk": obj.pk})
+
+        response = self.client.get(path=url)
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json()["results"] == [
+            {"week": "2025-01-20T00:00:00Z", "mean_speed": 53.6},
+            {"week": "2025-01-13T00:00:00Z", "mean_speed": 16.25},
+            {"week": "2024-12-30T00:00:00Z", "mean_speed": 30.0},
+        ]

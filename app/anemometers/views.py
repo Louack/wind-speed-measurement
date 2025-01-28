@@ -1,13 +1,12 @@
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
 from django.db.models import Avg, Max, Min, QuerySet
-from django.db.models.functions import Round
+from django.db.models.functions import Round, TruncDay, TruncWeek
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -19,7 +18,11 @@ from .serializers.model_serializers import (
     WindReadingSerializer,
 )
 from .serializers.query_serializers import SpeedStatsWithinRadiusQuerySerializer
-from .serializers.response_serializers import SpeedStatsWithinRadiusResponseSerializer
+from .serializers.response_serializers import (
+    DailyMeanSpeedsResponseSerializer,
+    SpeedStatsWithinRadiusResponseSerializer,
+    WeeklyMeanSpeedsResponseSerializer,
+)
 
 
 class AnemometerViewSet(
@@ -47,13 +50,44 @@ class AnemometerViewSet(
         anemometer = self.get_object()
         readings = anemometer.wind_readings.all().order_by("-date")
 
-        paginator = PageNumberPagination()
-        paginator.page_size = 10
-        paginated_readings = paginator.paginate_queryset(readings, request)
-
+        paginated_readings = self.paginate_queryset(readings)
         serializer = WindReadingSerializer(paginated_readings, many=True)
 
-        return paginator.get_paginated_response(serializer.data)
+        return self.get_paginated_response(serializer.data)
+
+    @swagger_auto_schema(responses={200: DailyMeanSpeedsResponseSerializer})
+    @action(detail=True, methods=["get"], url_path="mean/daily")
+    def get_daily_mean_speeds(self, request, pk=None):
+        anemometer = self.get_object()
+        mean_speeds = (
+            anemometer.wind_readings.annotate(day=TruncDay("date"))
+            .values("day")
+            .annotate(mean_speed=Round(Avg("speed"), 2))
+            .order_by("-day")
+        )
+
+        paginated_mean_speeds = self.paginate_queryset(mean_speeds)
+        serializer = DailyMeanSpeedsResponseSerializer(paginated_mean_speeds, many=True)
+
+        return self.get_paginated_response(serializer.data)
+
+    @swagger_auto_schema(responses={200: WeeklyMeanSpeedsResponseSerializer})
+    @action(detail=True, methods=["get"], url_path="mean/weekly")
+    def get_weekly_mean_speeds(self, request, pk=None):
+        anemometer = self.get_object()
+        mean_speeds = (
+            anemometer.wind_readings.annotate(week=TruncWeek("date"))
+            .values("week")
+            .annotate(mean_speed=Round(Avg("speed"), 2))
+            .order_by("-week")
+        )
+
+        paginated_mean_speeds = self.paginate_queryset(mean_speeds)
+        serializer = WeeklyMeanSpeedsResponseSerializer(
+            paginated_mean_speeds, many=True
+        )
+
+        return self.get_paginated_response(serializer.data)
 
 
 class WindReadingViewSet(
@@ -65,7 +99,7 @@ class WindReadingViewSet(
     mixins.DestroyModelMixin,
 ):
     serializer_class = WindReadingSerializer
-    queryset = WindSpeedReadings.objects.all().order_by("date")
+    queryset = WindSpeedReadings.objects.all().order_by("-date")
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = WindReadingFilterSet
     ordering_fields = ["date", "anemometer"]

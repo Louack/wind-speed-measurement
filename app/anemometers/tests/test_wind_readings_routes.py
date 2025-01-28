@@ -25,7 +25,7 @@ class WindReadingsAPITestCase(APITestCase):
         response = self.client.post(url, data=data)
         assert response.status_code == status.HTTP_201_CREATED
         assert response.json() == {
-            "id": 16,
+            "id": 21,
             "anemometer": "New York - Empire State Building",
             "speed": 10.36,
             "date": "2025-01-01T00:00:00Z",

@@ -202,13 +202,58 @@
       "date": "2025-01-22T12:00:00Z"
     }
   },
-  {
+    {
     "model": "anemometers.windspeedreadings",
     "pk": 15,
     "fields": {
       "anemometer": 5,
-      "speed": 76.2,
-      "date": "2025-01-22T18:00:00Z"
+      "speed": 10,
+      "date": "2025-01-18T18:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 20,
+    "fields": {
+      "anemometer": 5,
+      "speed": 25,
+      "date": "2025-01-18T12:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 16,
+    "fields": {
+      "anemometer": 5,
+      "speed": 10,
+      "date": "2025-01-18T18:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 17,
+    "fields": {
+      "anemometer": 5,
+      "speed": 20,
+      "date": "2025-01-15T18:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 18,
+    "fields": {
+      "anemometer": 5,
+      "speed": 30,
+      "date": "2025-01-03T18:00:00Z"
+    }
+  },
+  {
+    "model": "anemometers.windspeedreadings",
+    "pk": 19,
+    "fields": {
+      "anemometer": 5,
+      "speed": 30,
+      "date": "2025-01-04T18:00:00Z"
     }
   }
 ]
