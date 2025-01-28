@@ -40,8 +40,8 @@ class AnemometerAPITestCase(APITestCase):
             "properties": {
                 "name": "New York - Empire State Building",
                 "tags": ["USA"],
-                "daily_mean_speed": 59.0,
-                "weekly_mean_speed": 57.77,
+                "last_day_mean_speed": 59.0,
+                "last_week_mean_speed": 57.77,
             },
         }
 
