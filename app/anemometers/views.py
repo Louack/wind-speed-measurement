@@ -10,6 +10,8 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from core.cache import cache_response
+
 from .filters import AnemometerFilterSet, WindReadingFilterSet
 from .models import Anemometer, WindSpeedReadings
 from .serializers.model_serializers import (
@@ -44,6 +46,13 @@ class AnemometerViewSet(
             return AnemometerRetrieveSerializer
         return AnemometerSerializer
 
+    @cache_response()
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
     @swagger_auto_schema(responses={200: WindReadingSerializer})
     @action(detail=True, methods=["get"], url_path="readings")
     def get_readings(self, request, pk=None):
@@ -57,6 +66,7 @@ class AnemometerViewSet(
 
     @swagger_auto_schema(responses={200: DailyMeanSpeedsResponseSerializer})
     @action(detail=True, methods=["get"], url_path="mean/daily")
+    @cache_response()
     def get_daily_mean_speeds(self, request, pk=None):
         anemometer = self.get_object()
         mean_speeds = (
@@ -73,6 +83,7 @@ class AnemometerViewSet(
 
     @swagger_auto_schema(responses={200: WeeklyMeanSpeedsResponseSerializer})
     @action(detail=True, methods=["get"], url_path="mean/weekly")
+    @cache_response()
     def get_weekly_mean_speeds(self, request, pk=None):
         anemometer = self.get_object()
         mean_speeds = (

@@ -146,3 +146,21 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 APPEND_SLASH = False
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "terminal": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django.db.backends": {
+            "handlers": ["terminal"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
